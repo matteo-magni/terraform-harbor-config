@@ -23,7 +23,7 @@ resource "harbor_registry" "registry" {
 }
 
 data "harbor_registry" "registry" {
-  for_each = toset([for k, v in var.projects : k if v.registry != null])
+  for_each = toset([for p in var.projects : p.registry if p.registry != null])
 
   name = each.key
 
