@@ -33,10 +33,10 @@ variable "registries" {
     insecure      = optional(bool, false)
   }))
 
-  # validation {
-  #   condition     = contains(["alibaba", "artifact-hub", "aws", "azure", "docker-hub", "docker-registry", "gitlab", "github", "google", "harbor", "helm", "huawei", "jfrog", "quay"], var.registries["provider_name"])
-  #   error_message = "Allowed values for provider_name are \"alibaba\", \"artifact-hub\", \"aws\", \"azure\", \"docker-hub\", \"docker-registry\", \"gitlab\", \"github\", \"google\", \"harbor\", \"helm\", \"huawei\", \"jfrog\", \"quay\"."
-  # }
+  validation {
+    condition     = alltrue([for r in var.registries : contains(["alibaba", "artifact-hub", "aws", "azure", "docker-hub", "docker-registry", "gitlab", "github", "google", "harbor", "helm", "huawei", "jfrog", "quay"], r.provider_name)])
+    error_message = "Allowed values for provider_name are \"alibaba\", \"artifact-hub\", \"aws\", \"azure\", \"docker-hub\", \"docker-registry\", \"gitlab\", \"github\", \"google\", \"harbor\", \"helm\", \"huawei\", \"jfrog\", \"quay\"."
+  }
 }
 
 variable "registries_credentials" {
