@@ -17,7 +17,7 @@ variable "projects" {
     public                      = optional(bool, true)
     registry                    = optional(string, null)
     vulnerability_scanning      = optional(bool, true)
-    enable_content_trust        = optional(bool, true)
+    enable_content_trust        = optional(bool, false)
     enable_content_trust_cosign = optional(bool, false)
     storage_quota               = optional(number, null)
     cve_allowlist               = optional(list(string), null)
