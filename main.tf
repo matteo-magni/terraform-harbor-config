@@ -3,7 +3,7 @@ resource "harbor_project" "project" {
 
   name                        = each.key
   public                      = each.value.public
-  registry_id                 = each.value.registry != null ? harbor_registry.registry[each.value.registry].registry_id : null
+  registry_id                 = each.value.registry != null ? data.harbor_registry.registry[each.value.registry].registry_id : null
   vulnerability_scanning      = each.value.vulnerability_scanning
   enable_content_trust        = each.value.enable_content_trust
   enable_content_trust_cosign = each.value.enable_content_trust_cosign
@@ -20,4 +20,12 @@ resource "harbor_registry" "registry" {
   access_id     = contains(keys(var.registries_credentials), each.key) ? var.registries_credentials[each.key].access_id : null
   access_secret = contains(keys(var.registries_credentials), each.key) ? var.registries_credentials[each.key].access_secret : null
   insecure      = each.value.insecure
+}
+
+data "harbor_registry" "registry" {
+  for_each = toset([for k, v in var.projects : k if v.registry != null])
+
+  name = each.key
+
+  depends_on = [harbor_registry.registry]
 }
