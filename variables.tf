@@ -1,13 +1,11 @@
-variable "endpoint" {
-  type = string
-}
-
-variable "username" {
-  type = string
-}
-
-variable "password" {
-  type      = string
+variable "auth" {
+  type = object({
+    url         = string
+    username    = string
+    password    = string
+    insecure    = optional(bool)
+    api_version = optional(number)
+  })
   sensitive = true
 }
 

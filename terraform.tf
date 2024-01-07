@@ -10,7 +10,9 @@ terraform {
 }
 
 provider "harbor" {
-  url      = var.endpoint
-  username = var.username
-  password = var.password
+  url         = var.auth.url
+  username    = var.auth.username
+  password    = var.auth.password
+  insecure    = var.auth.insecure
+  api_version = var.auth.api_version
 }
