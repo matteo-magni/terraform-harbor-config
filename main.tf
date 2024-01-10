@@ -3,7 +3,7 @@ resource "harbor_project" "project" {
 
   name                        = each.key
   public                      = each.value.public
-  registry_id                 = each.value.registry != null ? data.harbor_registry.registry[each.value.registry].registry_id : null
+  registry_id                 = each.value.registry == null ? null : (contains(keys(harbor_registry.registry), each.value.registry) ? harbor_registry.registry[each.value.registry].registry_id : data.harbor_registry.registry[each.value.registry].registry_id)
   vulnerability_scanning      = each.value.vulnerability_scanning
   enable_content_trust        = each.value.enable_content_trust
   enable_content_trust_cosign = each.value.enable_content_trust_cosign
